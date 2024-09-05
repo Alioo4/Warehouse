@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User{
+  id           String @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  username     String @map("username") @db.VarChar(64)
+  password     String @map("password") @db.VarChar(64)
+  createdAt    DateTime @map("created_at") @default(now())
+
+  @@id([id])
+  @@map("user")
+}
+
+model Sklad{
+  id            String @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  balon         String @map("balon") @db.VarChar(255)
+  skladCount    Int @map("sklad_count")
+  onePrice      Int @map("one_price")
+  allPrice      Int @map("all_price") @default(0)
+  createdAt     DateTime @map("created_at") @default(now())
+  updatedAt     DateTime @map("updated_ at") @default(now())
+
+  @@id([id])
+  @@map("sklad")
+}
+
+model Vetrina{
+  id            String @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  oluvchi       String @map("oluvchi") @db.VarChar(255)
+  balon         String @map("balon") @db.VarChar(255)
+  soni          Int @map("soni") 
+  createdAt     DateTime @map("created_at") @default(now())
+  updatedAt     DateTime @map("updated_ at") @default(now())
+  
+  @@id([id])
+  @@map("vetrina")
+}
+
+model Bozor{
+  id            String @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  oluvchi       String @map("oluvchi") @db.VarChar(255)
+  balon         String @map("balon") @db.VarChar(255)
+  soni          Int @map("soni") 
+  narxi         Int @map("narxi") @default(0)
+  createdAt     DateTime @map("created_at") @default(now())
+  updatedAt     DateTime @map("updated_ at") @default(now())
+
+
+  @@id([id])
+  @@map("bozor")
+}
