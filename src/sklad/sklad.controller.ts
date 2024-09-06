@@ -1,10 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Query, UseGuards } from '@nestjs/common';
 import { SkladService } from './sklad.service';
 import { CreateSkladDto } from './dto/create-sklad.dto';
 import { UpdateSkladDto } from './dto/update-sklad.dto';
-import { ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '../auth/auth.guard';
 
 @ApiTags('Sklad')
+@UseGuards(AuthGuard)
+@ApiBearerAuth()
 @Controller('sklad')
 export class SkladController {
   constructor(private readonly skladService: SkladService) {}

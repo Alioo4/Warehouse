@@ -1,9 +1,10 @@
-import { Controller, Post, Body, Patch, Param } from '@nestjs/common';
+import { Controller, Post, Body, Patch, Param, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginAuthDto } from './dto/login.dto';
 import { RegisterAuthDto } from './dto/register.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UpdateUserDto } from './dto/update.dto';
+import { AuthGuard } from './auth.guard';
 
 @ApiTags('Auth')
 @Controller({version: '1', path: 'auth'})
@@ -20,6 +21,8 @@ export class AuthController {
     return this.authService.login(payload);
   }
 
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.authService.update(id, updateUserDto);

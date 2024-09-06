@@ -1,10 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Query, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Query, BadRequestException, UseGuards } from '@nestjs/common';
 import { BozorService } from './bozor.service';
 import { CreateBozorDto } from './dto/create-bozor.dto';
 import { UpdateBozorDto } from './dto/update-bozor.dto';
-import { ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '../auth/auth.guard';
 
 @ApiTags('Bozor')
+@UseGuards(AuthGuard)
+@ApiBearerAuth()
 @Controller('bozor')
 export class BozorController {
   constructor(private readonly bozorService: BozorService) {}

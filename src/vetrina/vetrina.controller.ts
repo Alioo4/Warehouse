@@ -1,10 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Query, UseGuards } from '@nestjs/common';
 import { VetrinaService } from './vetrina.service';
 import { CreateVetrinaDto } from './dto/create-vetrina.dto';
 import { UpdateVetrinaDto } from './dto/update-vetrina.dto';
-import { ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '../auth/auth.guard';
 
 @ApiTags('Vetrina')
+@UseGuards(AuthGuard)
+@ApiBearerAuth()
 @Controller('vetrina')
 export class VetrinaController {
   constructor(private readonly vetrinaService: VetrinaService) {}
